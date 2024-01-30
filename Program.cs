@@ -1,3 +1,6 @@
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using N8SwagRinLab.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddRinLogger(); // for Rin 監聽 HTTP 封包
@@ -11,13 +14,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddRin(); // for Rin 監聽 HTTP 封包
 
+//## for 健康狀態檢查
+builder.Services.AddHealthChecks()
+       .AddCheck<SimpleHealthCheck>(nameof(SimpleHealthCheck));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
   app.UseRin(); // for Rin 監聽 HTTP 封包
-  app.UseSwagger(); 
+  app.UseSwagger();
   app.UseSwaggerUI();
   app.UseRinDiagnosticsHandler(); // for Rin 監聽 HTTP 封包
 }
