@@ -30,4 +30,16 @@ public class WeatherForecastController : ControllerBase
     })
     .ToArray();
   }
+
+  [HttpPost(Name = "TakeWeatherForecast")]
+  public IEnumerable<WeatherForecast> Post(int count = 5)
+  {
+    return Enumerable.Range(1, count > 5 ? count : 5).Select(index => new WeatherForecast
+    {
+      Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+      TemperatureC = Random.Shared.Next(-20, 55),
+      Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+    })
+    .ToArray();
+  }
 }
