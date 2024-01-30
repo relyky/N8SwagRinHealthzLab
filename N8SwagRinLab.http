@@ -1,0 +1,6 @@
+@N8SwagRinLab_HostAddress = http://localhost:5288
+
+GET {{N8SwagRinLab_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
